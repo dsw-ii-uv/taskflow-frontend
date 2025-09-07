@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const MainLayout = () => {
   return (
-    <div className="min-h-screen">
+    <div className="flex flex-col h-screen">
       <nav className="bg-white shadow-sm pt-4">
         <div className="max-w-7xl flex justify-between mx-auto px-4 pb-2">
           <div className="flex items-center">
@@ -66,9 +66,9 @@ const MainLayout = () => {
         </div>
       </nav>
 
-      <main>
+      <main className="flex-1 overflow-y-auto">
         <div className="max-w-7xl mx-auto">
-          <div className="px-4 py-8">
+          <div className="px-4 py-6">
             <Outlet />
           </div>
         </div>
