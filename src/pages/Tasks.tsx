@@ -53,7 +53,7 @@ const initialTasks: Task[] = [
 ]
 
 const departments = [
-  { value: "HR", label: "R. Humanos" },
+  { value: "HR", label: "Recursos Humanos" },
   { value: "IT", label: "Tecnología" },
   { value: "SALES", label: "Ventas" },
   { value: "MARKETING", label: "Marketing" },
