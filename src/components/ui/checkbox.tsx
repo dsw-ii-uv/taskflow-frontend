@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 "use client"
 
->>>>>>> 80ffec9ce05b8688da54071d37d56502fb99d54e
 import * as React from "react"
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
 import { CheckIcon } from "lucide-react"
