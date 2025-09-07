@@ -25,7 +25,6 @@ type Task = {
   status: string
   priority: string
   deadline: string
-  department: string
   tags: string[]
 }
 
@@ -37,7 +36,6 @@ const initialTasks: Task[] = [
     status: "In Progress",
     priority: "Alta",
     deadline: "2025-09-15",
-    department: "IT",
     tags: ["Trabajo", "Universidad"],
   },
   {
@@ -47,18 +45,8 @@ const initialTasks: Task[] = [
     status: "To Do",
     priority: "Media",
     deadline: "2025-09-10",
-    department: "HR",
     tags: ["Trabajo", "Universidad"],
   },
-]
-
-const departments = [
-  { value: "HR", label: "Recursos Humanos" },
-  { value: "IT", label: "Tecnología" },
-  { value: "SALES", label: "Ventas" },
-  { value: "MARKETING", label: "Marketing" },
-  { value: "FINANCE", label: "Finanzas" },
-  { value: "OPERATIONS", label: "Operaciones" },
 ]
 
 export default function Tasks() {
@@ -75,7 +63,6 @@ export default function Tasks() {
   const [deadline, setDeadline] = useState("")
   const [priority, setPriority] = useState("Media")
   const [status, setStatus] = useState("To Do")
-  const [department, setDepartment] = useState("HR")
   const [tags, setTags] = useState<string[]>([])
 
   const resetForm = () => {
@@ -84,7 +71,6 @@ export default function Tasks() {
     setDeadline("")
     setPriority("Media")
     setStatus("To Do")
-    setDepartment("HR")
     setTags([])
   }
 
@@ -101,7 +87,6 @@ export default function Tasks() {
     setDeadline(task.deadline)
     setPriority(task.priority)
     setStatus(task.status)
-    setDepartment(task.department)
     setTags(task.tags)
     setOpen(true)
   }
@@ -125,7 +110,7 @@ export default function Tasks() {
     if (editingTask) {
       const updatedTasks = tasks.map((t) =>
         t.id === editingTask.id
-          ? { ...t, title, description, deadline, priority, status, department, tags }
+          ? { ...t, title, description, deadline, priority, status, tags }
           : t
       )
       setTasks(updatedTasks)
@@ -137,7 +122,6 @@ export default function Tasks() {
         deadline,
         priority,
         status,
-        department,
         tags,
       }
       setTasks((prev) => [...prev, newTask])
@@ -211,24 +195,8 @@ export default function Tasks() {
               />
             </div>
 
-            {/* Fila con Departamento, Prioridad y Estado */}
-            <div className="grid grid-cols-3 gap-6">
-              <div>
-                <Label>Departamento</Label>
-                <Select value={department} onValueChange={setDepartment}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {departments.map((dep) => (
-                      <SelectItem key={dep.value} value={dep.value}>
-                        {dep.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
+            {/* Fila con Prioridad y Estado */}
+            <div className="grid grid-cols-2 gap-6">
               <div>
                 <Label>Prioridad</Label>
                 <Select value={priority} onValueChange={setPriority}>
@@ -314,7 +282,6 @@ export default function Tasks() {
               <p className="text-sm text-muted-foreground">{task.description}</p>
             </CardHeader>
             <CardContent>
-              <p><strong>Departamento:</strong> {departments.find(d => d.value === task.department)?.label}</p>
               <p><strong>Estado:</strong> {task.status}</p>
               <p><strong>Prioridad:</strong> {task.priority}</p>
               <p><strong>Fecha límite:</strong> {task.deadline}</p>
