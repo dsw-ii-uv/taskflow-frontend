@@ -13,28 +13,49 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-
+import { login } from "@/service/auth"
+import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
+import { useAuth } from "@/context/AuthContext"
 interface Department {
   value: string;
   label: string;
 }
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  const { authLogin } = useAuth()
   const [department, setDepartment] = useState<string>("");
 
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const username = e.currentTarget.username.value;
+    const password = e.currentTarget.password.value;
+    try {
+      const token = await login(username, password);
+      authLogin(token)
+      navigate("/")
+      toast.success("Inicio de sesión exitoso")
+    } catch (error) {
+      console.error(error);
+      toast.error("Error al iniciar sesión")
+    }
+  }
+
   const departments: Department[] = [
-    { value: "HR", label: "Recursos Humanos" },
-    { value: "IT", label: "Tecnología" },
-    { value: "SALES", label: "Ventas" },
-    { value: "MARKETING", label: "Marketing" },
-    { value: "FINANCE", label: "Finanzas" },
-    { value: "OPERATIONS", label: "Operaciones" },
+    { value: "1", label: "Recursos Humanos" },
+    { value: "2", label: "Tecnología" },
+    { value: "3", label: "Ventas" },
+    { value: "4", label: "Marketing" },
+    { value: "5", label: "Finanzas" },
+    { value: "6", label: "Operaciones" },
   ]
+
   return (
       <Card className="w-full max-w-4xl h-[80vh] flex flex-col md:flex-row shadow-lg">
         
         {/* Columna izquierda - Tabs con Login / Registro */}
-        <div className="flex-[2] p-8">
+        <div className="flex-[2] px-8">
           <h1 className="text-2xl font-bold mb-2 text-center">TaskFlow</h1>
           <p className="text-sm text-gray-500 mb-6 text-center">
             Administra tus tareas de manera eficiente
@@ -47,17 +68,17 @@ export default function LoginPage() {
             </TabsList>
 
             {/* Login */}
-            <TabsContent value="login">
-              <form className="space-y-4">
+            <TabsContent value="login" className="mt-8">
+              <form className="space-y-4" onSubmit={handleLogin}>
                 <div>
-                  <Label htmlFor="email">Correo electrónico</Label>
-                  <Input id="email" type="email" placeholder="tu@email.com" />
+                  <Label htmlFor="username">Correo electrónico</Label>
+                  <Input id="username" type="text" placeholder="tu@email.com" />
                 </div>
                 <div>
                   <Label htmlFor="password">Contraseña</Label>
                   <Input id="password" type="password" placeholder="********" />
                 </div>
-                <Button className="w-full" type="submit">
+                <Button className="flex w-2/3 mx-auto gap-2 justify-center mt-8 cursor-pointer" type="submit">
                   Iniciar Sesión
                 </Button>
               </form>
@@ -66,9 +87,15 @@ export default function LoginPage() {
             {/* Registro */}
             <TabsContent value="register">
               <form className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Nombre completo</Label>
-                  <Input id="name" type="text" placeholder="Tu nombre" />
+                <div className="grid grid-cols-2 gap-x-4">
+                  <div>
+                    <Label htmlFor="first_name">Nombre</Label>
+                    <Input id="first_name" type="text" placeholder="Tu nombre" />
+                  </div>
+                  <div>
+                    <Label htmlFor="last_name">Apellido</Label>
+                    <Input id="last_name" type="text" placeholder="Tu apellido" />
+                  </div>
                 </div>
                 <div>
                   <Label htmlFor="reg-email">Correo electrónico</Label>
@@ -84,7 +111,7 @@ export default function LoginPage() {
                     value={department}
                     onValueChange={setDepartment}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Selecciona un departamento" />
                     </SelectTrigger>
                     <SelectContent>
@@ -96,7 +123,7 @@ export default function LoginPage() {
                     </SelectContent>
                   </Select>
                 </div>
-                <Button className="flex w-2/3 mx-auto gap-2 justify-center" type="submit">
+                <Button className="flex w-2/3 mx-auto gap-2 justify-center cursor-pointer" type="submit">
                   Registrarse
                 </Button>
               </form>
