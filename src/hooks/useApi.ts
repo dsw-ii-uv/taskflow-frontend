@@ -23,5 +23,5 @@ export function useApi() {
     }
   }
 
-  return request
+  return { request }
 }
