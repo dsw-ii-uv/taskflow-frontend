@@ -25,6 +25,7 @@ type Task = {
   status: string
   priority: string
   deadline: string
+  department: string
   tags: string[]
 }
 
@@ -36,6 +37,7 @@ const initialTasks: Task[] = [
     status: "In Progress",
     priority: "Alta",
     deadline: "2025-09-15",
+    department: "IT",
     tags: ["Trabajo", "Universidad"],
   },
   {
@@ -45,6 +47,7 @@ const initialTasks: Task[] = [
     status: "To Do",
     priority: "Media",
     deadline: "2025-09-10",
+    department: "HR",
     tags: ["Trabajo", "Universidad"],
   },
 ]
@@ -63,6 +66,7 @@ export default function Tasks() {
   const [deadline, setDeadline] = useState("")
   const [priority, setPriority] = useState("Media")
   const [status, setStatus] = useState("To Do")
+  const [department, setDepartment] = useState("HR")
   const [tags, setTags] = useState<string[]>([])
 
   const resetForm = () => {
@@ -71,6 +75,7 @@ export default function Tasks() {
     setDeadline("")
     setPriority("Media")
     setStatus("To Do")
+    setDepartment("HR")
     setTags([])
   }
 
@@ -87,6 +92,7 @@ export default function Tasks() {
     setDeadline(task.deadline)
     setPriority(task.priority)
     setStatus(task.status)
+    setDepartment(task.department)
     setTags(task.tags)
     setOpen(true)
   }
@@ -122,6 +128,7 @@ export default function Tasks() {
         deadline,
         priority,
         status,
+        department,
         tags,
       }
       setTasks((prev) => [...prev, newTask])
@@ -282,6 +289,7 @@ export default function Tasks() {
               <p className="text-sm text-muted-foreground">{task.description}</p>
             </CardHeader>
             <CardContent>
+              <p><strong>Departamento:</strong> {departments.find(d => d.value === task.department)?.label}</p>
               <p><strong>Estado:</strong> {task.status}</p>
               <p><strong>Prioridad:</strong> {task.priority}</p>
               <p><strong>Fecha límite:</strong> {task.deadline}</p>
