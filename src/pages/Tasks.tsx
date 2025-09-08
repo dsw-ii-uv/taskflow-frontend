@@ -23,7 +23,7 @@ export default function Tasks() {
       }
     }
     fetchTasks()
-  }, [reloadKey])
+  }, [reloadKey, request])
 
   return (
     <div className="p-6">
