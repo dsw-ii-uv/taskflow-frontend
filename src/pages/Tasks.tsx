@@ -52,15 +52,6 @@ const initialTasks: Task[] = [
   },
 ]
 
-const departments = [
-  { value: "HR", label: "Recursos Humanos" },
-  { value: "IT", label: "Tecnología" },
-  { value: "SALES", label: "Ventas" },
-  { value: "MARKETING", label: "Marketing" },
-  { value: "FINANCE", label: "Finanzas" },
-  { value: "OPERATIONS", label: "Operaciones" },
-]
-
 export default function Tasks() {
   const [open, setOpen] = useState(false)
   const [tasks, setTasks] = useState<Task[]>(initialTasks)
@@ -125,7 +116,7 @@ export default function Tasks() {
     if (editingTask) {
       const updatedTasks = tasks.map((t) =>
         t.id === editingTask.id
-          ? { ...t, title, description, deadline, priority, status, department, tags }
+          ? { ...t, title, description, deadline, priority, status, tags }
           : t
       )
       setTasks(updatedTasks)
@@ -211,24 +202,8 @@ export default function Tasks() {
               />
             </div>
 
-            {/* Fila con Departamento, Prioridad y Estado */}
-            <div className="grid grid-cols-3 gap-6">
-              <div>
-                <Label>Departamento</Label>
-                <Select value={department} onValueChange={setDepartment}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {departments.map((dep) => (
-                      <SelectItem key={dep.value} value={dep.value}>
-                        {dep.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
+            {/* Fila con Prioridad y Estado */}
+            <div className="grid grid-cols-2 gap-6">
               <div>
                 <Label>Prioridad</Label>
                 <Select value={priority} onValueChange={setPriority}>
