@@ -9,6 +9,7 @@ import Login from "@/pages/Login"
 import Dashboard from "@/pages/Dashboard"
 import Profile from "@/pages/Profile"
 import Tasks from "@/pages/Tasks"
+import { Toaster } from "sonner"
 
 export default function AppRouter() {
   return (
@@ -31,6 +32,7 @@ export default function AppRouter() {
             </Route>
           </Route>
         </Routes>
+        <Toaster position="top-right" richColors />
       </BrowserRouter>
     </AuthProvider>
   )

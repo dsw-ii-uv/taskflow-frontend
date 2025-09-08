@@ -5,14 +5,14 @@ import { createContext, useContext, useState, useEffect } from "react"
 type AuthContextType = {
   isLoggedIn: boolean
   loading: boolean
-  login: (token: string) => void
-  logout: () => void
+  authLogin: (token: string) => void
+  authLogout: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -23,12 +23,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }, 1000);
   }, [])
 
-  const login = (token: string) => {
+  const authLogin = (token: string) => {
     setIsLoggedIn(true)
     localStorage.setItem("auth", token)
   }
 
-  const logout = () => {
+  const authLogout = () => {
     setLoading(true)
     setIsLoggedIn(false)
     setTimeout(() => {
@@ -38,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, loading, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, loading, authLogin, authLogout }}>
       {children}
     </AuthContext.Provider>
   )

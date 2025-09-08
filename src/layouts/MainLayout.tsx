@@ -4,9 +4,15 @@ import { LogOutIcon, User, UserCircleIcon } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
+import { toast } from 'sonner';
 
 const MainLayout = () => {
-  const { logout } = useAuth()
+  const { authLogout } = useAuth()
+
+  const handleLogout = () => {
+    authLogout()
+    toast.success("Sesión cerrada exitosamente")
+  }
 
   return (
     <div className="flex flex-col h-screen">
@@ -55,7 +61,7 @@ const MainLayout = () => {
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link to="/login" className="flex-row items-center gap-2" onClick={() => logout()}>
+                        <Link to="/login" className="flex-row items-center gap-2" onClick={() => handleLogout()}>
                           <LogOutIcon className="size-4" />
                           Cerrar sesión
                         </Link>
