@@ -12,7 +12,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -29,7 +29,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const logout = () => {
+    setLoading(true)
     setIsLoggedIn(false)
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000);
     localStorage.removeItem("auth")
   }
 
