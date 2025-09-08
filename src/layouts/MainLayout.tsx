@@ -1,52 +1,81 @@
+import { NavigationMenuContent, NavigationMenuTrigger, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '@/components/ui/navigation-menu';
+import { LogOutIcon, User, UserCircleIcon } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 const MainLayout = () => {
+  const { logout } = useAuth()
+
   return (
-    <div className="min-h-screen bg-gray-100">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
-              <div className="flex-shrink-0 flex items-center">
-                <h1 className="text-xl font-bold">TaskFlow</h1>
-              </div>
-              <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                <Link
-                  to="/dashboard"
-                  className="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  to="/tareas"
-                  className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                >
-                  Tareas
-                </Link>
-              </div>
-            </div>
-            <div className="hidden sm:ml-6 sm:flex sm:items-center">
-              <Link
-                to="/perfil"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Perfil
-              </Link>
-            </div>
+    <div className="flex flex-col h-screen">
+      <nav className="bg-white shadow-sm pt-4">
+        <div className="max-w-7xl flex justify-between mx-auto px-4 pb-2">
+          <div className="flex items-center">
+            <Link to="/">
+              <img
+                src="full_logo.svg"
+                alt="Logo TaskFlow DS"
+                className="h-8 object-contain"
+              />
+            </Link>
           </div>
+
+          <NavigationMenu viewport={false}>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <Link to="/">Inicio</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <Link to="/tareas">Mis Tareas</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>
+                  <div className="flex items-center gap-2 cursor-pointer">
+                    <UserCircleIcon className="size-4" />
+                    <span>John Doe</span>
+                  </div>
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-max">
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link to="/perfil" className="flex-row items-center gap-2">
+                          <User className="size-4" />
+                          Perfil
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link to="/login" className="flex-row items-center gap-2" onClick={() => logout()}>
+                          <LogOutIcon className="size-4" />
+                          Cerrar sesión
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
       </nav>
 
-      <div className="py-10">
-        <main>
-          <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div className="px-4 py-8 sm:px-0">
-              <Outlet />
-            </div>
+      <main className="flex-1 overflow-y-auto">
+        <div className="max-w-7xl mx-auto">
+          <div className="px-4 py-6">
+            <Outlet />
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 };

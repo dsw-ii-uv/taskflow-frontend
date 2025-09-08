@@ -30,7 +30,6 @@ export default function LoginPage() {
     { value: "FINANCE", label: "Finanzas" },
     { value: "OPERATIONS", label: "Operaciones" },
   ]
-
   return (
       <Card className="w-full max-w-4xl h-[80vh] flex flex-col md:flex-row shadow-lg">
         
@@ -68,13 +67,12 @@ export default function LoginPage() {
             <TabsContent value="register">
               <form className="space-y-4">
                 <div>
-                  <Label htmlFor="first_name">Nombres</Label>
-                  <Input id="first_name" type="text" placeholder="Tus nombres" />
+                  <Label htmlFor="name">Nombre completo</Label>
+                  <Input id="name" type="text" placeholder="Tu nombre" />
                 </div>
-
                 <div>
-                  <Label htmlFor="last_name">Apellidos</Label>
-                  <Input id="last_name" type="text" placeholder="Tus apellidos" />
+                  <Label htmlFor="reg-email">Correo electrónico</Label>
+                  <Input id="reg-email" type="email" placeholder="tu@email.com" />
                 </div>
                 <div>
                   <Label htmlFor="reg-password">Contraseña</Label>
