@@ -3,8 +3,11 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { LogOutIcon, User, UserCircleIcon } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 const MainLayout = () => {
+  const { logout } = useAuth()
+
   return (
     <div className="flex flex-col h-screen">
       <nav className="bg-white shadow-sm pt-4">
@@ -52,7 +55,7 @@ const MainLayout = () => {
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link to="/login" className="flex-row items-center gap-2">
+                        <Link to="/login" className="flex-row items-center gap-2" onClick={() => logout()}>
                           <LogOutIcon className="size-4" />
                           Cerrar sesión
                         </Link>
