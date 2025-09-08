@@ -1,12 +1,35 @@
 "use client"
 
+import { useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+interface Department {
+  value: string;
+  label: string;
+}
 
 export default function LoginPage() {
+  const [department, setDepartment] = useState<string>("");
+
+  const departments: Department[] = [
+    { value: "HR", label: "Recursos Humanos" },
+    { value: "IT", label: "Tecnología" },
+    { value: "SALES", label: "Ventas" },
+    { value: "MARKETING", label: "Marketing" },
+    { value: "FINANCE", label: "Finanzas" },
+    { value: "OPERATIONS", label: "Operaciones" },
+  ]
   return (
       <Card className="w-full max-w-4xl h-[80vh] flex flex-col md:flex-row shadow-lg">
         
@@ -55,15 +78,25 @@ export default function LoginPage() {
                   <Label htmlFor="reg-password">Contraseña</Label>
                   <Input id="reg-password" type="password" placeholder="********" />
                 </div>
-                <div>
-                  <Label htmlFor="confirm-password">Confirmar contraseña</Label>
-                  <Input
-                    id="confirm-password"
-                    type="password"
-                    placeholder="********"
-                  />
+                <div className="w-full">
+                  <Label htmlFor="department">Departamento</Label>
+                  <Select
+                    value={department}
+                    onValueChange={setDepartment}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona un departamento" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {departments.map((dep: Department) => (
+                        <SelectItem key={dep.value} value={dep.value}>
+                          {dep.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-                <Button className="w-full" type="submit">
+                <Button className="flex w-2/3 mx-auto gap-2 justify-center" type="submit">
                   Registrarse
                 </Button>
               </form>
@@ -72,7 +105,7 @@ export default function LoginPage() {
         </div>
 
         {/* Columna derecha - Imagen fija */}
-        <div className="flex-[1] hidden md:flex bg-gray-100">
+        <div className="flex-[2] hidden md:flex bg-white-100">
           <img
             src="/imagen.png"
             alt="Ilustración de inicio de sesión"
