@@ -289,7 +289,6 @@ export default function Tasks() {
               <p className="text-sm text-muted-foreground">{task.description}</p>
             </CardHeader>
             <CardContent>
-              <p><strong>Departamento:</strong> {departments.find(d => d.value === task.department)?.label}</p>
               <p><strong>Estado:</strong> {task.status}</p>
               <p><strong>Prioridad:</strong> {task.priority}</p>
               <p><strong>Fecha límite:</strong> {task.deadline}</p>
