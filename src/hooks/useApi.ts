@@ -14,12 +14,20 @@ export function useApi() {
         },
         ...(body ? { body: JSON.stringify(body) } : {}),
       })
+
       if (!response.ok) throw new Error("Error en la petición")
+
+      // Si el backend responde sin contenido (204)
+      if (response.status === 204) {
+        return null
+      }
+
       return response.json()
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message)
       }
+      return null
     }
   }
 

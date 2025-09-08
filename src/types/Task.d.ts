@@ -2,9 +2,14 @@ export type Task = {
   id: number
   title: string
   description: string
-  status: string
-  priority: string
-  deadline: string
-  department: string
-  tags: string[]
+  due_date: string
+  posted_by: {
+    id: number
+  }
+  priority: number
+  state: number
+  home_tag: boolean
+  work_tag: boolean
+  university_tag: boolean
+  social_tag: boolean
 }

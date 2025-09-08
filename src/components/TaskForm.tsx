@@ -11,6 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useApi } from "@/hooks/useApi";
 import { toast } from "sonner";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
+import type { Task } from "@/types/Task";
+import { useReload } from "@/context/ReloadContext";
 
 // ✅ Definición de validaciones con Zod
 const TaskSchema = z.object({
@@ -32,12 +34,13 @@ type TaskFormData = z.infer<typeof TaskSchema>;
 interface TaskFormProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  editingTask: number | null;
+  editingTask: Task | null;
   onClose: () => void;
 }
 
 export function TaskForm({ open, setOpen, editingTask, onClose }: TaskFormProps) {
   const { request } = useApi()
+  const { triggerReload } = useReload()
 
   const {
     register,
@@ -61,13 +64,14 @@ export function TaskForm({ open, setOpen, editingTask, onClose }: TaskFormProps)
   const onSubmit = async (data: TaskFormData) => {
     try {
       if (editingTask) {
-        await request(`tasks/${editingTask}/`, "PUT", data);
+        await request(`tasks/${editingTask.id}/`, "PUT", data);
       } else {
         await request("tasks/", "POST", data);
       }
 
       toast.success("Tarea guardada correctamente")
       setOpen(false);
+      triggerReload();
       onClose();
       reset();
     } catch (err) {
