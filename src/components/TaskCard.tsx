@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import type { Task } from "../types/Task";
+import { TaskPriorityMap, TaskStateMap, type Task } from "../types/Task";
 import dayjs from "dayjs";
 import { TaskDelete } from "./TaskDelete";
 import { toast } from "sonner";
@@ -40,8 +40,8 @@ export function TaskCard({ task, setEditingTask }: TaskCardProps) {
           <p className="text-sm text-muted-foreground">{task.description}</p>
         </CardHeader>
         <CardContent>
-          <p><strong>Estado:</strong> {task.state}</p>
-          <p><strong>Prioridad:</strong> {task.priority}</p>
+          <p><strong>Estado:</strong> {TaskStateMap[task.state]}</p>
+          <p><strong>Prioridad:</strong> {TaskPriorityMap[task.priority]}</p>
           <p><strong>Fecha límite:</strong> {dayjs(task.due_date).format("DD/MM/YYYY")}</p>
           <div className="mt-2 flex flex-wrap gap-2">
             {[

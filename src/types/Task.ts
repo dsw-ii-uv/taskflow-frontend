@@ -13,3 +13,15 @@ export type Task = {
   university_tag: boolean
   social_tag: boolean
 }
+
+export const TaskPriorityMap : { [key: number]: string } = {
+  1: "Baja",
+  2: "Media",
+  3: "Alta",
+}
+
+export const TaskStateMap : { [key: number]: string } = {
+  1: "To Do",
+  2: "In Progress",
+  3: "Done",
+}

@@ -17,7 +17,37 @@ export async function login(username: string, password: string) {
     const data = await response.json();
     return data.token;
   } catch (error) {
-    console.error(error);
+    throw error
+  }
+}
+
+export async function register(data: {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  department: number;
+}) {
+  try {
+    const response = await fetch(API_URL + "users/register/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data,
+        is_boss: false,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al registrar usuario");
+    }
+
+    const responseData = await response.json();
+    return responseData.token;
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -37,7 +67,7 @@ export async function logout() {
 
     localStorage.removeItem("auth");
   } catch (error) {
-    console.error(error);
+    throw error
   }
 }
 

@@ -33,7 +33,7 @@ export default function AppRouter() {
               </Route>
             </Route>
           </Routes>
-          <Toaster position="top-right" richColors />
+          <Toaster position="bottom-right" richColors />
         </BrowserRouter>
       </ReloadProvider>
     </AuthProvider>
