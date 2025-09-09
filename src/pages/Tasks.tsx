@@ -5,6 +5,7 @@ import { TaskForm } from "@/components/TaskForm"
 import { TaskCard } from "@/components/TaskCard"
 import { useApi } from "@/hooks/useApi"
 import { useReload } from "@/context/ReloadContext"
+import { toast } from "sonner"
 
 export default function Tasks() {
   const { request } = useApi()
@@ -19,7 +20,7 @@ export default function Tasks() {
         const response = await request("tasks/", "GET")
         setTasks(response.results)
       } catch (error) {
-        console.error("Error al cargar tareas:", error)
+        toast.error("Error al cargar tareas")
       }
     }
     fetchTasks()

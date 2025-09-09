@@ -24,10 +24,7 @@ export function useApi() {
 
       return response.json()
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message)
-      }
-      return null
+      return error
     }
   }
 
